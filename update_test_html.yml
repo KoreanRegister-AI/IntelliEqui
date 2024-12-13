@@ -27,7 +27,7 @@ jobs:
     - name: Commit updated index.html # 변경된 index.html 파일 커밋
       uses: EndBug/add-and-commit@v7
       with:
-        author_name: Your Name # 사용자 이름
-        author_email: your_email@example.com # 사용자 이메일
+        author_name: MJ KIM # 사용자 이름
+        author_email: kimmji@krs.co.kr # 사용자 이메일
         message: Update index.html with current time # 커밋 메시지
         add: "index.html" # 변경된 파일 추가
