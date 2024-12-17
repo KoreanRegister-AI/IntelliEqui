@@ -80,14 +80,14 @@ jobs:
       run: |
         ./gradlew jib \
         -Djib.to.image="zxcvb5434/devopstest:${GITHUB_REF##*/}"
-#checkout Action을 통해 레포지토리를 다운받은 폴더로 이동
-#setup-java Action을 통해 java 11 설치
-#Docker Hub로 이미지를 푸시하기 위해 docker login action을 통해 자격정보 획득
-#${{ secrets.DOCKERHUB_USERNAME }}를 통해 시크릿 환경 변수 사용
-#run 명령어를 통해 ubuntu에서 특정 명령 실행
-#chmod +x gradlew 명령어를 통해 권한을 조정한 후 gradlw jib 명령을 통해 이미지 빌드 후 컨테이너 레지스리로 업로드
-#깃허브 액션은 workflow가 실행될때 기본 환경 변수가 제공 됨 - 커밋 sha, tag name 등
-#${GITHUB_REF##*/} - 를 통해 TAG 이름을 사용
+# checkout Action을 통해 레포지토리를 다운받은 폴더로 이동
+# setup-java Action을 통해 java 11 설치
+# Docker Hub로 이미지를 푸시하기 위해 docker login action을 통해 자격정보 획득
+# ${{ secrets.DOCKERHUB_USERNAME }}를 통해 시크릿 환경 변수 사용
+# run 명령어를 통해 ubuntu에서 특정 명령 실행
+# chmod +x gradlew 명령어를 통해 권한을 조정한 후 gradlw jib 명령을 통해 이미지 빌드 후 컨테이너 레지스리로 업로드
+# 깃허브 액션은 workflow가 실행될때 기본 환경 변수가 제공 됨 - 커밋 sha, tag name 등
+# ${GITHUB_REF##*/} - 를 통해 TAG 이름을 사용
 
   deploy:
     
@@ -108,7 +108,7 @@ jobs:
       with: 
         config: ${{ secrets.KUBECONFIG }}
         command: apply -f ./k8s/deployment.yaml
-# needs 문법을 통해 build job이 성공적으로 완료될 때만 수행
+# needs 문법을 통해 build job이 성공적으로 완료될 때만 수행 --> 직렬로만 수행 가능
 # sed 명령어를 통해 Repositroy에 Deployment yaml 파일의 tag 수정
 # latest 태그를 깃허브 태그 이름으로 수정
 # kubectl action을 통해 kubectl apply 명령 실행
