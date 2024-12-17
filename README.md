@@ -43,17 +43,18 @@ jobs:
 * uses: actions/checkout@v2 - 해당 레포지토리를 pull 받고 이동하는 action 대부분의 workflow에서 사용
 * uses: actions/setup-node@v2 - 노드를 설치하는 action으로 가상머신안에는 대부분의 프로그래밍 언어가 설치되어 있지 않기 때문에 프로젝트 실행에 필요한 언어들을 action을 통해 다운
 * run: npm install -g bats - run 키워드를 통해 러너가 실행되는 서버에서 명령어를 실행
-<pre>
-<code>
+
+```yaml
 name: Gradle Build & K8S Deploy
 # V를 앞글자로 가지는 태그가 push 될 때 해당 workflow 실행 - ex) V2, V3
 on:
   push:
     tags: V*
-
+# Workflow의 이름을 Gradle Build & K8S Deploy로 정의
+# V를 앞글자로 가지는 태그가 푸시될 때 해당 workflow 실행
 jobs:
   build:
-
+# build 시작
     runs-on: ubuntu-latest
 
     steps:
@@ -79,7 +80,15 @@ jobs:
       run: |
         ./gradlew jib \
         -Djib.to.image="zxcvb5434/devopstest:${GITHUB_REF##*/}"
-        
+#checkout Action을 통해 레포지토리를 다운받은 폴더로 이동
+#setup-java Action을 통해 java 11 설치
+#Docker Hub로 이미지를 푸시하기 위해 docker login action을 통해 자격정보 획득
+#${{ secrets.DOCKERHUB_USERNAME }}를 통해 시크릿 환경 변수 사용
+#run 명령어를 통해 ubuntu에서 특정 명령 실행
+#chmod +x gradlew 명령어를 통해 권한을 조정한 후 gradlw jib 명령을 통해 이미지 빌드 후 컨테이너 레지스리로 업로드
+#깃허브 액션은 workflow가 실행될때 기본 환경 변수가 제공 됨 - 커밋 sha, tag name 등
+#${GITHUB_REF##*/} - 를 통해 TAG 이름을 사용
+
   deploy:
     
     needs: build
@@ -99,5 +108,8 @@ jobs:
       with: 
         config: ${{ secrets.KUBECONFIG }}
         command: apply -f ./k8s/deployment.yaml
-</code>
-</pre>
+# needs 문법을 통해 build job이 성공적으로 완료될 때만 수행
+# sed 명령어를 통해 Repositroy에 Deployment yaml 파일의 tag 수정
+# latest 태그를 깃허브 태그 이름으로 수정
+# kubectl action을 통해 kubectl apply 명령 실행
+```
