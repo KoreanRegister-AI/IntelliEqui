@@ -35,7 +35,10 @@ jobs:
 ```
 > name
 workflow의 name을 정의
-선택사항이며 깃허브 저장소의 깃허브 액션 탭에서 workflow의 이름 < 
+* 선택사항이며 깃허브 저장소의 깃허브 액션 탭에서 workflow의 이름
+> on
+> 해당 workflow를 실행시키는 이벤트를 정의
+> push이벤트가 발생 시, workflow 실행되도록 정의
 <pre>
 <code>
 
