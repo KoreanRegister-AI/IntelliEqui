@@ -6,7 +6,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # 실행할 환경 선택 windows-latest 
+    runs-on: ubuntu-latest # 실행할 환경 선택 windows-latest
+    ##
+    permissions:
+     contents: write
+     ##
     steps:
     - uses: actions/checkout@v2 # 리포지토리 체크아웃
     - name: Use Node.js # 노드 설정
