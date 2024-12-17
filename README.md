@@ -1,7 +1,6 @@
 # IntelliEqui
-=================
 ## GitHub Action 구성 요소
----------------------------
+
 ### Workflow
   한개 이상의 job을 실행할 수 있는 자동화된 작업  
   YAML 파일로 저장되며 event에 의해 실행 됩니다.
@@ -21,7 +20,18 @@
 ## EXAMPLE
 
 ```yaml
-
+name: learn-github-actions
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
 ```
 <pre>
 <code>
