@@ -33,12 +33,16 @@ jobs:
       - run: npm install -g bats
       - run: bats -v
 ```
-> name
-workflow의 name을 정의
+> name : workflow의 name을 정의
 * 선택사항이며 깃허브 저장소의 깃허브 액션 탭에서 workflow의 이름
-> on
-> 해당 workflow를 실행시키는 이벤트를 정의
-> push이벤트가 발생 시, workflow 실행되도록 정의
+> on : 해당 workflow를 실행시키는 이벤트를 정의  
+* push이벤트가 발생 시, workflow 실행되도록 정의
+> jobs : check-bats-version--> job의 이름을 정의
+* runs-on : 어떤 호스트에서 실행될지 정의 - ex) ubuntu 가상 머신에서 실행되도록 정의
+> steps
+* uses: actions/checkout@v2 - 해당 레포지토리를 pull 받고 이동하는 action 대부분의 workflow에서 사용
+* uses: actions/setup-node@v2 - 노드를 설치하는 action으로 가상머신안에는 대부분의 프로그래밍 언어가 설치되어 있지 않기 때문에 프로젝트 실행에 필요한 언어들을 action을 통해 다운
+* run: npm install -g bats - run 키워드를 통해 러너가 실행되는 서버에서 명령어를 실행
 <pre>
 <code>
 
