@@ -2,7 +2,7 @@
 
 ## GitHub Action 구성 요소
 ### Workflow
-  한개 이상의 job을 실행할 수 있는 자동화된 작업
+  한개 이상의 job을 실행할 수 있는 자동화된 작업 \n
   YAML 파일로 저장되며 event에 의해 실행 됩니다.
 ### Event
   workflow 실행을 발동시키는 특정한 활동
