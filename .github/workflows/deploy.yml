@@ -1,0 +1,21 @@
+name: Deployment using Docker Swarm 
+on:
+  workflow_run:
+    workflows: ["Build Docker Image"]
+    types: [completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+# SSH를 통해 Docker Swarm에 배포
+    steps:
+      - name: SSH to Swarm Manager and Deploy
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SWARM_MANAGER_IP }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/my-app-build:latest
+            docker stack deploy -c swarm/stack.yml my-app-stack
+
