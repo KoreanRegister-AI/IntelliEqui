@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: krserver02 # ubuntu-latest
 # SSH를 통해 Docker Swarm에 배포
     steps:
       - name: SSH to Swarm Manager and Deploy
