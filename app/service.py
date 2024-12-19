@@ -1,3 +1,4 @@
+# 모델 서빙 방식 : bentoml 방식
 import bentoml
 from bentoml.io import JSON
 import pickle
