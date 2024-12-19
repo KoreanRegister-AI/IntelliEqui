@@ -9,13 +9,22 @@ jobs:
     runs-on: krserver02 # ubuntu-latest
 # SSH를 통해 Docker Swarm에 배포
     steps:
+       # 1. Checkout Code
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: SSH to Swarm Manager and Deploy
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SWARM_MANAGER_IP }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
+
+         # 최신 Docker 이미지 가져오기
+         # 기존 서비스 중지 및 제거 (옵션)
+         # docker service rm my-app-service || true
+         # Docker Swarm 스택 배포
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/my-app-build:latest
-            docker stack deploy -c swarm/stack.yml my-app-stack
 
+            docker stack deploy -c swarm/stack.yml my-app-stack
