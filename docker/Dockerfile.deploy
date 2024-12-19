@@ -1,0 +1,14 @@
+FROM python:3.9-slim
+
+# 최소한의 패키지 설치
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# 모델 및 서빙 코드 복사
+COPY app /app
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# FastAPI 실행
+CMD ["python", "serve_model.py"]
