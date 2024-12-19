@@ -10,13 +10,22 @@ jobs:
   runs-on: krserver02
 
   steps:
+  # 코드 체크아웃
    - name: CheckOut Code 
      uses: actions/checkout@v3  #외부 액션 호출
 
+  # 모델 저장 및 BentoML로 패키징
+   - name: Save and package model
+     run: |
+       python train_model.py
+       bentoml models list
+
+   #  Docker 이미지 빌드        
    - name: Build Docker Image
      run: |                     # 직접적인 쉘 명령 실행
       docker build -f docker/Dockerfile.build -t ${{ secrets.DOCKER_USERNAME }}/my-app-build:latest .
 
+   # DockerHub로 이미지 푸시
    - name: Login to DockerHub 
      uses: docker/login-action@v2
      with:
