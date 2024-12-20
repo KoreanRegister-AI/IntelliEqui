@@ -1,1 +1,17 @@
+version: "3.8"
 
+services:
+  iris-classifier:
+    image: $DOCKER_USERNAME/my-app-service:latest
+    ports:
+      - "5000:3000" # 외부 포트 5000 -> 컨테이너 내부 포트 3000
+    deploy:
+      replicas: 3  # 컨테이너 복제본 수
+      restart_policy:
+        condition: on-failure
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: overlay
